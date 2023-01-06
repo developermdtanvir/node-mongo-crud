@@ -12,14 +12,20 @@ app.use(cors());
 
 
 const uri = "mongodb+srv://admin1:KcpagiArOAa8SKBR@cluster0.338egrb.mongodb.net/?retryWrites=true&w=majority";
-const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
-client.connect(err => {
-    const collection = client.db("test").collection("devices");
-    console.log('mongodb connected');
-    // perform actions on the collection object
-    client.close();
-});
+const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 })
 
+async function run() {
+    try {
+        await client.connect()
+        const userCollaetion = client.db("foodExpress").collection('user');
+        const user = { name: 'Tanvir', email: 'info@gmail.com' };
+        const result = await userCollaetion.insertOne(user);
+        console.log(`User instrated with id ${result.insertedId}`);
+    }
+    finally {
+        // await client.close();
+    }
+}
 
 
 app.get('/', (req, res) => {
@@ -32,4 +38,4 @@ app.post('/addUser', (req, res) => {
 
 app.listen(port, () => console.log(`listinign port ${port}`))
 
-
+run().catch(console.dir);
