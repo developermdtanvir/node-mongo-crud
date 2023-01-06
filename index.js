@@ -23,12 +23,24 @@ async function run() {
         // const result = await userCollaetion.insertOne(user);
         // console.log(`User instrated with id ${result.insertedId}`);
 
+
+        // post request
         app.post('/user', async (req, res) => {
             const user = req.body;
             console.log(user, 'User recived');
             const result = await userCollaetion.insertOne(user);
-            console.log(result.insertedId)
+            result.id = result.insertedId
             res.send(result);
+        })
+
+        // get request
+        app.get('/user', async (req, res) => {
+            const query = {}
+
+            const cursor = userCollaetion.find(query);
+            const user = await cursor.toArray();
+            console.log(user);
+            res.send(user);
         })
     }
     finally {

@@ -26,6 +26,20 @@
 *1. Client side form create  
 *2. onSubmit Eventhandlar send data to server 
 *3. on Server : Create user POST To recived data to the backend 
+*------------------------------------
+* GET Data to the client side : ----
+*----------------------------------->
+*1.Create GET API 
+*2.Find all Document to the Database using Collection.find()
+*3.Courso.toArry()
+*-----------------------------------
+*  Delet to UI for Database Next Day 
+*-----------------------------------
+*
+*
+*
+*
+*
 
 
 
