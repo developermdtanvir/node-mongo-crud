@@ -19,7 +19,7 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 async function run() {
     try {
         await client.connect()
-        const userCollaetion = client.db("foodExpress").collection('user');
+        const userCollection = client.db("foodExpress").collection('user');
         // const user = { name: 'Tanvir', email: 'info@gmail.com' };
         // const result = await userCollaetion.insertOne(user);
         // console.log(`User instrated with id ${result.insertedId}`);
@@ -29,7 +29,7 @@ async function run() {
         app.post('/user', async (req, res) => {
             const user = req.body;
             console.log(user, 'User recived');
-            const result = await userCollaetion.insertOne(user);
+            const result = await userCollection.insertOne(user);
             result.id = result.insertedId
             res.send(result);
         })
@@ -38,7 +38,7 @@ async function run() {
         app.get('/user', async (req, res) => {
             const query = {}
 
-            const cursor = userCollaetion.find(query);
+            const cursor = userCollection.find(query);
             const user = await cursor.toArray();
             console.log(user);
             res.send(user);
@@ -47,7 +47,7 @@ async function run() {
         app.get('/user/:id', async (req, res) => {
             const id = req.params.id
             const query = { _id: ObjectId(id) }
-            const result = await userCollaetion.findOne(query);
+            const result = await userCollection.findOne(query);
             res.send(result);
         })
 
@@ -64,7 +64,7 @@ async function run() {
                     email: updateUser.email
                 }
             }
-            const result = await userCollaetion.updateOne(filter, updateDoc, options);
+            const result = await userCollection.updateOne(filter, updateDoc, options);
             res.send(result);
         })
 
@@ -72,7 +72,7 @@ async function run() {
             const id = req.params.id;
             const query = { _id: ObjectId(id) }
             console.log(id);
-            const result = await userCollaetion.deleteOne(query);
+            const result = await userCollection.deleteOne(query);
             res.send(result);
         })
     }
